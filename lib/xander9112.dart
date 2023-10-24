@@ -13,3 +13,4 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 export 'src/_domain/_domain.dart';
+export 'src/data/_data.dart';
