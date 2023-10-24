@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xander9112/xander9112.dart';
 
-abstract class DI {
-  static final GetIt getDI = GetIt.instance;
+abstract class ServiceLocator {
+  static final GetIt getSL = GetIt.instance;
 
   /// Инициализация роутера
   Future<void> initRouter() async {}
