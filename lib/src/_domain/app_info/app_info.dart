@@ -6,7 +6,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:xander9112/xander9112.dart';
 
 abstract class AppInfo {
-  static Future<String?> _getId() async {
+  static Future<String?> getId() async {
     final deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       // import 'dart:io'
