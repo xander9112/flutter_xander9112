@@ -24,6 +24,8 @@ class DeviceInfoModel {
     );
   }
 
+  String get fullInfoModel => '$system $model $version';
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'model': model,
