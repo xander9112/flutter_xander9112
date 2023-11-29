@@ -63,5 +63,5 @@ class DeviceInfoModel {
   @override
   int get hashCode => model.hashCode ^ system.hashCode ^ version.hashCode;
 
-  String get fullVersion => '$model $system:$version';
+  String get fullVersion => '$system $model $version';
 }
