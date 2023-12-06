@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/io.dart';
 import 'package:xander9112/xander9112.dart';
 
 /// Клиент для работы с Dio
@@ -158,5 +159,24 @@ class DioApiClient {
     // }
 
     return handler.next(e);
+  }
+
+  void initCertificate(String ip) {
+    // Make sure to replace <YOUR_LOCAL_IP> with
+// the external IP of your computer if you're using Android.
+// You can get the IP in the Android Setup Guide window
+    final String proxy = Platform.isAndroid ? '$ip:9090' : 'localhost:9090';
+
+    final client =
+        (_dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient!();
+
+    // Hook into the findProxy callback to set the client's proxy.
+    client.findProxy = (url) {
+      return 'PROXY $proxy';
+    };
+    // This is a workaround to allow Proxyman to receive
+    // SSL payloads when your app is running on Android.
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => Platform.isAndroid;
   }
 }
