@@ -167,16 +167,20 @@ class DioApiClient {
 // You can get the IP in the Android Setup Guide window
     final String proxy = Platform.isAndroid ? '$ip:9090' : 'localhost:9090';
 
-    final client =
-        (_dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient!();
+// Tap into the onHttpClientCreate callback
+// to configure the proxy just as we did earlier.
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      // Hook into the findProxy callback to set the client's proxy.
+      client.findProxy = (url) {
+        return 'PROXY $proxy';
+      };
 
-    // Hook into the findProxy callback to set the client's proxy.
-    client.findProxy = (url) {
-      return 'PROXY $proxy';
+      // This is a workaround to allow Proxyman to receive
+      // SSL payloads when your app is running on Android.
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => Platform.isAndroid;
+      return null;
     };
-    // This is a workaround to allow Proxyman to receive
-    // SSL payloads when your app is running on Android.
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => Platform.isAndroid;
   }
 }
