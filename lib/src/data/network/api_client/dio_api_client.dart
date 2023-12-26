@@ -18,6 +18,10 @@ class DioApiClient {
     Duration? connectTimeout,
     Duration? receiveTimeout,
     this.useLogger = true,
+    this.requestHeader = false,
+    this.requestBody = false,
+    this.responseHeader = false,
+    this.responseBody = true,
   })  : _dio = dio ?? Dio(),
         _connectTimeout = connectTimeout ?? const Duration(seconds: 50),
         _receiveTimeout = receiveTimeout ?? const Duration(seconds: 50) {
@@ -29,6 +33,17 @@ class DioApiClient {
 
   final Duration _connectTimeout;
   final Duration _receiveTimeout;
+
+  final bool requestHeader;
+
+  /// Print request data [Options.data]
+  final bool requestBody;
+
+  /// Print [Response.data]
+  final bool responseBody;
+
+  /// Print [Response.headers]
+  final bool responseHeader;
 
   CancelToken cancelToken = CancelToken();
 
@@ -75,8 +90,10 @@ class DioApiClient {
     if (useLogger) {
       dio.interceptors.add(
         PrettyDioLogger(
-          // requestHeader: true,
-          requestBody: true,
+          requestHeader: requestHeader,
+          requestBody: requestBody,
+          responseHeader: responseHeader,
+          responseBody: responseBody,
         ),
       );
     }
